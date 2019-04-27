@@ -26,7 +26,7 @@ public:
     }
 };
 
-void AddSC_LFG_SoloMode()
+void AddSC_LFG_SoloModeScripts()
 {
     new spp_lfg_solo;
 }
