@@ -4,7 +4,9 @@
 ** Made into a module by Micrah https://github.com/milestorme/
 */
 
-#include "Config.h"
+#include "ScriptMgr.h"
+#include "Player.h"
+#include "Configuration/Config.h"
 #include "World.h"
 #include "LFGMgr.h"
 #include "Chat.h"
