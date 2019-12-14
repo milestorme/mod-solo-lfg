@@ -16,19 +16,20 @@ class lfg_solo : public PlayerScript
 public:
     lfg_solo() : PlayerScript("lfg_solo") { }
 
-    void OnLogin(Player* player, bool /*loginFirst*/)
+   void OnLogin(Player* player)
+   {
+	   if (sConfigMgr->GetIntDefault("LFG.SoloMode", true))
     {
-        if (sConfigMgr->GetBoolDefault("LFG.SoloMode", true))
+        if (!sLFGMgr->IsSoloLFG())
         {
-            if (!sLFGMgr->IsSoloLFG())
-            {
-                sLFGMgr->ToggleSoloLFG();
-            }
+            sLFGMgr->ToggleSoloLFG();
         }
     }
+   }
 };
 
 void AddScLfg_SoloScripts()
 {
     new lfg_solo();
 }
+
