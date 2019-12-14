@@ -10,6 +10,7 @@
 #include "World.h"
 #include "LFGMgr.h"
 #include "Chat.h"
+#include "Opcodes.h"
 
 class lfg_solo : public PlayerScript
 {
@@ -19,12 +20,12 @@ public:
    void OnLogin(Player* player)
    {
 	   if (sConfigMgr->GetIntDefault("LFG.SoloMode", true))
-    {
-        if (!sLFGMgr->IsSoloLFG())
         {
+            if (!sLFGMgr->IsSoloLFG())
+            {
             sLFGMgr->ToggleSoloLFG();
+            }
         }
-    }
    }
 };
 
