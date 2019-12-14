@@ -1,18 +1,5 @@
-From 9ab0fd18007be9f84d47e7d4cf9d821623fc868d Mon Sep 17 00:00:00 2001
-From: Micrah <44911744+milestorme@users.noreply.github.com>
-Date: Sun, 1 Sep 2019 11:02:53 +1000
-Subject: [PATCH] add solo lfg
-
----
- src/server/game/DungeonFinding/LFGMgr.cpp     | 8 ++++++--
- src/server/game/DungeonFinding/LFGMgr.h       | 6 +++++-
- src/server/game/DungeonFinding/LFGQueue.cpp   | 4 ++--
- src/server/game/DungeonFinding/LFGScripts.cpp | 9 +++++++++
- src/server/worldserver/worldserver.conf.dist  | 7 +++++++
- 5 files changed, 29 insertions(+), 5 deletions(-)
-
 diff --git a/src/server/game/DungeonFinding/LFGMgr.cpp b/src/server/game/DungeonFinding/LFGMgr.cpp
-index 7fc218ee45..882d3488c6 100644
+index 95a7aec98f..4afd6e635e 100644
 --- a/src/server/game/DungeonFinding/LFGMgr.cpp
 +++ b/src/server/game/DungeonFinding/LFGMgr.cpp
 @@ -27,7 +27,7 @@
@@ -33,42 +20,48 @@ index 7fc218ee45..882d3488c6 100644
      {
          for (LfgProposalPlayerContainer::const_iterator it = proposal.players.begin(); it != proposal.players.end(); ++it)
              SendLfgUpdateProposal(it->first, proposal);
-@@ -2703,5 +2703,9 @@ LfgDungeonSet LFGMgr::GetRandomAndSeasonalDungeons(uint8 level, uint8 expansion)
+@@ -2640,5 +2640,8 @@ LfgDungeonSet LFGMgr::GetRandomAndSeasonalDungeons(uint8 level, uint8 expansion)
      }
      return randomDungeons;
  }
+-
 +void LFGMgr::ToggleSoloLFG()
 +{
 +    m_isSoloLFG = !m_isSoloLFG;
 +}
- 
  } // namespace lfg
+
+
+
 diff --git a/src/server/game/DungeonFinding/LFGMgr.h b/src/server/game/DungeonFinding/LFGMgr.h
-index c51f006600..5088701b15 100644
+index c51f006600..f0fdccfcac 100644
 --- a/src/server/game/DungeonFinding/LFGMgr.h
 +++ b/src/server/game/DungeonFinding/LFGMgr.h
-@@ -516,6 +516,10 @@ class LFGMgr
+@@ -516,7 +516,10 @@ class LFGMgr
          void RBPacketAppendPlayer(const RBInternalInfo& info, ByteBuffer& buffer);
          void RBPacketBuildDifference(WorldPacket& differencePacket, uint32 dungeonId, uint32 deletedCounter, ByteBuffer& buffer_deleted, uint32 groupCounter, ByteBuffer& buffer_groups, uint32 playerCounter, ByteBuffer& buffer_players);
          void RBPacketBuildFull(WorldPacket& fullPacket, uint32 dungeonId, RBInternalInfoMap& infoMap);
+-
 +        /// Toggle LFG in debug mode
 +        void ToggleSoloLFG();
 +        /// Check if debug mode
 +        bool IsSoloLFG() const { return m_isSoloLFG; }
- 
          // LfgQueue
          /// Get last lfg state (NONE, DUNGEON or FINISHED_DUNGEON)
-@@ -574,7 +578,7 @@ class LFGMgr
+         LfgState GetOldState(uint64 guid);
+@@ -574,7 +577,7 @@ class LFGMgr
          uint32 lastProposalId;                             ///< pussywizard, store it here because of splitting LFGMgr update into tasks
          uint32 m_raidBrowserUpdateTimer[2];                ///< pussywizard
          uint32 m_raidBrowserLastUpdatedDungeonId[2];       ///< pussywizard: for 2 factions
 -
-+        bool m_isSoloLFG;
++        bool m_isSoloLFG;                                  ///< solo lfg
          LfgQueueContainer QueuesStore;                     ///< Queues
          LfgCachedDungeonContainer CachedDungeonMapStore;   ///< Stores all dungeons by groupType
          // Reward System
+
+
 diff --git a/src/server/game/DungeonFinding/LFGQueue.cpp b/src/server/game/DungeonFinding/LFGQueue.cpp
-index 30ae2a4ec4..d6f6e43ccb 100644
+index 30ae2a4ec4..288ccbe5af 100644
 --- a/src/server/game/DungeonFinding/LFGQueue.cpp
 +++ b/src/server/game/DungeonFinding/LFGQueue.cpp
 @@ -289,7 +289,7 @@ LfgCompatibility LFGQueue::CheckCompatibility(Lfg5Guids const& checkWith, const
@@ -76,7 +69,7 @@ index 30ae2a4ec4..d6f6e43ccb 100644
  
      // Group with less that MAXGROUPSIZE members always compatible
 -    if (check.size() == 1 && numPlayers < MAXGROUPSIZE)
-+    if (!sLFGMgr->IsSoloLFG() && numPlayers != MAXGROUPSIZE)
++    if (!sLFGMgr->IsSoloLFG() && numPlayers != MAXGROUPSIZE) //solo lfg
      {
          LfgQueueDataContainer::iterator itQueue = QueueDataStore.find(check.front());
          LfgRolesMap roles = itQueue->second.roles;
@@ -85,7 +78,7 @@ index 30ae2a4ec4..d6f6e43ccb 100644
  
      // Enough players?
 -    if (numPlayers != MAXGROUPSIZE)
-+        if (!sLFGMgr->IsSoloLFG() && numPlayers != MAXGROUPSIZE)
++    if (!sLFGMgr->IsSoloLFG() && numPlayers != MAXGROUPSIZE) //solo  lfg
      {
          strGuids.addRoles(proposalRoles);
          for (uint8 i=0; i<5 && check.guid[i]; ++i)
