@@ -16,7 +16,7 @@ Solo LFG Module for Azerothcore.
 ## Edit module configuration (optional)
 
 If you need to change the module configuration, go to your server configuration folder (where your `worldserver` or `worldserver.exe` is)
-rename the file mod_ahbot.conf.dist to mod_ahbot.conf and edit it.
+rename the file SoloLfg.conf.dist to SoloLfg.conf and edit it.
 
 
 ## Credits
