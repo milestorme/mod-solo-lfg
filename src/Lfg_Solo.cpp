@@ -1,7 +1,7 @@
 /*
 ** Made by Traesh https://github.com/Traesh
 ** AzerothCore 2019 http://www.azerothcore.org/
-**  [Conan513:](https://github.com/conan513).
+** Conan513 https://github.com/conan513
 ** Made into a module by Micrah https://github.com/milestorme/
 */
 
@@ -30,7 +30,7 @@ public:
    }
 };
 
-void AddScLfg_SoloScripts()
+void AddLfgSoloScripts()
 {
     new lfg_solo();
 }

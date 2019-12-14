@@ -1,1 +1,1 @@
-void AddSc_Lfg_SoloScripts();
+void AddLfgSoloScripts();
