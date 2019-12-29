@@ -2,7 +2,7 @@
 
 ## Description
 
-Solo LFG Module for Azerothcore.
+Solo LFG Module for Azerothcore (Docker installations version).
 
 
 ## Installation
