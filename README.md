@@ -21,4 +21,4 @@ rename the file SoloLfg.conf.dist to SoloLfg.conf and edit it.
 
 ## Credits
 *  [Micrah/Milestorme: Module Creator](https://github.com/milestorme).
-*  [Conan513:](https://github.com/conan513).
+*  [Conan513: original script](https://github.com/conan513).
