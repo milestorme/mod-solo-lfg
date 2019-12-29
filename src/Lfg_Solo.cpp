@@ -3,6 +3,7 @@
 ** AzerothCore 2019 http://www.azerothcore.org/
 ** Conan513 https://github.com/conan513
 ** Made into a module by Micrah https://github.com/milestorme/
+** Updated to work with AzerothCore Docker Installations by Artanisx https://github.com/Artanisx/
 */
 
 #include "ScriptMgr.h"
