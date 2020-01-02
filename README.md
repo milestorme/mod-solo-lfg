@@ -20,6 +20,6 @@ rename the file SoloLfg.conf.dist to SoloLfg.conf and edit it.
 
 
 ## Credits
-*  [Traesh: Original Script](.https://github.com/Traesh)
+*  [Traesh: Original Script](https://github.com/Traesh)
 *  [Micrah/Milestorme: Module Creator](https://github.com/milestorme).
 *  [Conan513:](https://github.com/conan513).
