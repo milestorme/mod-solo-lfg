@@ -19,6 +19,7 @@ Allows for players to use dungeon finder solo or in groups less than and up to 5
     a. In order to do this, please go to the root /azerothcore-wotlk of your installation.
     b. Then do git apply modules/mod-solo-lfg/lfg-solo.patch 
     (make sure the path is indeed pointing to your lfg-solo.patch file)
+3. Go to src/Lfg_solo.cpp and replace line 24 with ```   void OnLogin(Player* __attribute__ ((unused))player)``` save file.
 3. Re-run cmake and launch a clean build of AzerothCore.
     a. Go to your root folder and  ./bin/acore-docker-build
     b. Then do a docker-compose up
