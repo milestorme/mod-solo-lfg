@@ -27,7 +27,7 @@ Allows for players to use dungeon finder solo or in groups less than and up to 5
 ## Edit module configuration (optional)
 
 If you need to change the module configuration, go to your server configuration folder (where your `worldserver` or `worldserver.exe` is)
-rename the file SoloLfg.conf.dist to SoloLfg.conf and edit it.
+copy the file SoloLfg.conf.dist to SoloLfg.conf and edit it (keep both files).
 
 ## Standard Uninstallation
 ```
