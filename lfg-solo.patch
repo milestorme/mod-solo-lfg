@@ -82,3 +82,4 @@ index 30ae2a4ec4..288ccbe5af 100644
      {
          strGuids.addRoles(proposalRoles);
          for (uint8 i=0; i<5 && check.guid[i]; ++i)
+		 
