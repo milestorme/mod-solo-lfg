@@ -2,13 +2,13 @@
 
 ## Description
 
-Solo LFG Module for Azerothcore (Docker installations version).
+Allows for players to use dungeon finder solo or in groups less than and up to 5 players. Use on azerothcore 3.3.5a. Good companion module for mod-solocraft and mod-autobalance. (Docker installations version).
 
 
 ## Installation
 ```
 0. Go inside your /modules/ folder
-1. git clone https://github.com/Artanisx/mod-solo-lfg.git
+1. git clone https://github.com/milestorme/mod-solo-lfg.git
 2. Apply lfg-solo.patch to your core.
     a. In order to do this, please go to the root /azerothcore-wotlk of your installation.
     b. Then do git apply modules/mod-solo-lfg/lfg-solo.patch 
