@@ -39,16 +39,15 @@ public:
    // to the player variable to tell the compiler it is fine not to use it.
    void OnLogin(Player* player)
    {
-	   if (sConfigMgr->GetIntDefault("LFG.SoloMode", true))
-        {
-            if (!sLFGMgr->IsSoloLFG())
-            {
-            sLFGMgr->ToggleSoloLFG();
-            }
-        }
+	if (sConfigMgr->GetIntDefault("LFG.SoloMode", 1))
+	{
+		if (!sLFGMgr->IsSoloLFG())
+		{
+			sLFGMgr->ToggleSoloLFG();
+		}
+	}
    }
 };
-
 class lfg_solo_config : public WorldScript
 {
 public:
@@ -61,8 +60,9 @@ public:
             std::string cfg_file = conf_path + "/SoloLfg.conf";
 
             std::string cfg_def_file = cfg_file + ".dist";
-            sConfigMgr->LoadMore(cfg_def_file.c_str());
-            sConfigMgr->LoadMore(cfg_file.c_str());
+            sConfigMgr->GetIntDefault("LFG.SoloMode", 0);
+	    sConfigMgr->GetBoolDefault("SoloLFG.Announce", false);
+
         }
     }
 };
@@ -70,6 +70,6 @@ public:
 void AddLfgSoloScripts()
 {
 	new lfg_solo_announce();
-    new lfg_solo();
+	new lfg_solo();
 	new lfg_solo_config();
 }
