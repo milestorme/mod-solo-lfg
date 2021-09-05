@@ -12,5 +12,12 @@
 
 LFG.SoloMode = 1
 
+#    AnnounceSoloLfg
+#        Description: Announce if enabled
+#        Default:     true  - (Enabled)
+#                     false  - (Disabled)
+
+SoloLFG.Announce = true
+
 
 ###################################################################################################
