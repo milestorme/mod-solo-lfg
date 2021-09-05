@@ -1,5 +1,5 @@
 diff --git a/src/server/game/DungeonFinding/LFGMgr.cpp b/src/server/game/DungeonFinding/LFGMgr.cpp
-index 3ed8184..6951e81 100644
+index 5c9498486..c58b025fe 100644
 --- a/src/server/game/DungeonFinding/LFGMgr.cpp
 +++ b/src/server/game/DungeonFinding/LFGMgr.cpp
 @@ -27,7 +27,7 @@
@@ -11,7 +11,7 @@ index 3ed8184..6951e81 100644
      {
          new LFGPlayerScript();
          new LFGGroupScript();
-@@ -1639,7 +1639,7 @@ namespace lfg
+@@ -1673,7 +1673,7 @@ namespace lfg
              if (itPlayers->second.accept != LFG_ANSWER_AGREE)   // No answer (-1) or not accepted (0)
                  allAnswered = false;
  
@@ -20,7 +20,7 @@ index 3ed8184..6951e81 100644
          {
              for (LfgProposalPlayerContainer::const_iterator it = proposal.players.begin(); it != proposal.players.end(); ++it)
                  SendLfgUpdateProposal(it->first, proposal);
-@@ -2658,4 +2658,9 @@ namespace lfg
+@@ -2657,4 +2657,9 @@ namespace lfg
          return randomDungeons;
      }
  
@@ -31,10 +31,10 @@ index 3ed8184..6951e81 100644
 +
  } // namespace lfg
 diff --git a/src/server/game/DungeonFinding/LFGMgr.h b/src/server/game/DungeonFinding/LFGMgr.h
-index d301bad..c01545e 100644
+index 0340cc57a..3aa5ce920 100644
 --- a/src/server/game/DungeonFinding/LFGMgr.h
 +++ b/src/server/game/DungeonFinding/LFGMgr.h
-@@ -534,6 +534,10 @@ namespace lfg
+@@ -533,6 +533,11 @@ namespace lfg
          void RBPacketBuildDifference(WorldPacket& differencePacket, uint32 dungeonId, uint32 deletedCounter, ByteBuffer& buffer_deleted, uint32 groupCounter, ByteBuffer& buffer_groups, uint32 playerCounter, ByteBuffer& buffer_players);
          void RBPacketBuildFull(WorldPacket& fullPacket, uint32 dungeonId, RBInternalInfoMap& infoMap);
  
@@ -42,10 +42,11 @@ index d301bad..c01545e 100644
 +        void ToggleSoloLFG();
 +        /// Check if debug mode
 +        bool IsSoloLFG() const { return m_isSoloLFG; }
++
          // LfgQueue
          /// Get last lfg state (NONE, DUNGEON or FINISHED_DUNGEON)
-         LfgState GetOldState(uint64 guid);
-@@ -592,6 +596,8 @@ namespace lfg
+         LfgState GetOldState(ObjectGuid guid);
+@@ -591,6 +596,8 @@ namespace lfg
          uint32 m_raidBrowserUpdateTimer[2];                ///< pussywizard
          uint32 m_raidBrowserLastUpdatedDungeonId[2];       ///< pussywizard: for 2 factions
  
@@ -55,10 +56,10 @@ index d301bad..c01545e 100644
          LfgCachedDungeonContainer CachedDungeonMapStore;   ///< Stores all dungeons by groupType
          // Reward System
 diff --git a/src/server/game/DungeonFinding/LFGQueue.cpp b/src/server/game/DungeonFinding/LFGQueue.cpp
-index 0079901..f0f1e84 100644
+index e43080c14..66a763aeb 100644
 --- a/src/server/game/DungeonFinding/LFGQueue.cpp
 +++ b/src/server/game/DungeonFinding/LFGQueue.cpp
-@@ -289,7 +289,7 @@ namespace lfg
+@@ -285,7 +285,7 @@ namespace lfg
              return LFG_INCOMPATIBLES_MULTIPLE_LFG_GROUPS;
  
          // Group with less that MAXGROUPSIZE members always compatible
@@ -67,14 +68,12 @@ index 0079901..f0f1e84 100644
          {
              LfgQueueDataContainer::iterator itQueue = QueueDataStore.find(check.front());
              LfgRolesMap roles = itQueue->second.roles;
-@@ -386,7 +386,7 @@ namespace lfg
+@@ -382,7 +382,7 @@ namespace lfg
          }
  
          // Enough players?
 -        if (numPlayers != MAXGROUPSIZE)
-+        if (!sLFGMgr->IsSoloLFG() && numPlayers != MAXGROUPSIZE) //solo  lfg
++        if (!sLFGMgr->IsSoloLFG() && numPlayers != MAXGROUPSIZE) //solo lfg
          {
              strGuids.addRoles(proposalRoles);
-             for (uint8 i = 0; i < 5 && check.guid[i]; ++i)
--- 
-1.8.3.1
+             for (uint8 i = 0; i < 5 && check.guids[i]; ++i)
