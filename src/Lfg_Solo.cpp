@@ -25,51 +25,49 @@ public:
         // Announce Module
         if (sConfigMgr->GetBoolDefault("SoloLFG.Announce", true))
         {
-                ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00Solo Dungeon Finder |rmodule.");
-         }
+            ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00Solo Dungeon Finder |rmodule.");
+        }
     }
 };
 
-class lfg_solo : public PlayerScript
+class lfg_solo : public PlayerScript 
 {
 public:
     lfg_solo() : PlayerScript("lfg_solo") { }
     
-   // Docker Installation prevents warnings. In order to avoid the issue, we need to add __attribute__ ((unused)) 
-   // to the player variable to tell the compiler it is fine not to use it.
-   void OnLogin(Player* player)
-   {
-	   if (sConfigMgr->GetIntDefault("LFG.SoloMode", true))
+    // Docker Installation prevents warnings. In order to avoid the issue, we need to add __attribute__ ((unused)) 
+    // to the player variable to tell the compiler it is fine not to use it.
+    void OnLogin(Player* player)
+    {
+        if (sConfigMgr->GetIntDefault("LFG.SoloMode", 1))
         {
             if (!sLFGMgr->IsSoloLFG())
             {
-            sLFGMgr->ToggleSoloLFG();
+               sLFGMgr->ToggleSoloLFG();
             }
         }
-   }
+    }
 };
-
 class lfg_solo_config : public WorldScript
 {
 public:
     lfg_solo_config() : WorldScript("lfg_solo_config") { }
 
-    void OnBeforeConfigLoad(bool reload) override
-    {
+    void OnBeforeConfigLoad(bool reload) override {
         if (!reload) {
             std::string conf_path = _CONF_DIR;
             std::string cfg_file = conf_path + "/SoloLfg.conf";
 
             std::string cfg_def_file = cfg_file + ".dist";
-            sConfigMgr->LoadMore(cfg_def_file.c_str());
-            sConfigMgr->LoadMore(cfg_file.c_str());
+            sConfigMgr->GetIntDefault("LFG.SoloMode", 0);
+            sConfigMgr->GetBoolDefault("SoloLFG.Announce", false);
         }
     }
 };
 
 void AddLfgSoloScripts()
 {
-	new lfg_solo_announce();
+    new lfg_solo_announce();
     new lfg_solo();
-	new lfg_solo_config();
+    new lfg_solo_config();
 }
