@@ -2,16 +2,15 @@ diff --git a/src/server/game/DungeonFinding/LFGMgr.cpp b/src/server/game/Dungeon
 index 9ce415f32..21390338f 100644
 --- a/src/server/game/DungeonFinding/LFGMgr.cpp
 +++ b/src/server/game/DungeonFinding/LFGMgr.cpp
-@@ -27,7 +27,7 @@
+@@ -42,6 +42,6 @@
  namespace lfg
  {
- 
 -    LFGMgr::LFGMgr(): m_lfgProposalId(1), m_options(sWorld->getIntConfig(CONFIG_LFG_OPTIONSMASK)), m_Testing(false)
 +    LFGMgr::LFGMgr(): m_lfgProposalId(1), m_options(sWorld->getIntConfig(CONFIG_LFG_OPTIONSMASK)), m_Testing(false), m_isSoloLFG(false)
      {
          new LFGPlayerScript();
          new LFGGroupScript();
-@@ -1733,7 +1733,7 @@ namespace lfg
+@@ -1826,7 +1826,7 @@ namespace lfg
              if (itPlayers->second.accept != LFG_ANSWER_AGREE)   // No answer (-1) or not accepted (0)
                  allAnswered = false;
  
@@ -20,7 +19,7 @@ index 9ce415f32..21390338f 100644
          {
              for (LfgProposalPlayerContainer::const_iterator it = proposal.players.begin(); it != proposal.players.end(); ++it)
                  SendLfgUpdateProposal(it->first, proposal);
-@@ -2706,4 +2706,9 @@ namespace lfg
+@@ -2809,4 +2809,9 @@ namespace lfg
          return randomDungeons;
      }
  
