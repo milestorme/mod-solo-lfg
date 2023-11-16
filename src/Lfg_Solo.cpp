@@ -23,7 +23,7 @@ public:
     void OnLogin(Player* player)
     {
         // Announce Module
-        if (sConfigMgr->GetBoolDefault("SoloLFG.Announce", true))
+        if (sConfigMgr->GetOption<bool>("SoloLFG.Announce", true))
         {
             ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00Solo Dungeon Finder |rmodule.");
         }
@@ -39,7 +39,7 @@ public:
     // to the player variable to tell the compiler it is fine not to use it.
     void OnLogin(Player* player)
     {
-        if (sConfigMgr->GetIntDefault("LFG.SoloMode", 1))
+        if (sConfigMgr->GetOption<int32> ("LFG.SoloMode", 1))
         {
             if (!sLFGMgr->IsSoloLFG())
             {
@@ -59,8 +59,8 @@ public:
             std::string cfg_file = conf_path + "/SoloLfg.conf";
 
             std::string cfg_def_file = cfg_file + ".dist";
-            sConfigMgr->GetIntDefault("LFG.SoloMode", 0);
-            sConfigMgr->GetBoolDefault("SoloLFG.Announce", false);
+            sConfigMgr->GetOption("LFG.SoloMode", 0);
+            sConfigMgr->GetOption("SoloLFG.Announce", false);
         }
     }
 };
